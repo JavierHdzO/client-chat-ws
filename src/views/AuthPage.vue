@@ -12,7 +12,8 @@
         >Sign In</button>
  </div>
 
- <div class="container">
+ <div class="content">
+    <div class="container">
     
     <div v-if="selected">
         <label>Name</label>
@@ -48,6 +49,7 @@
     </div>
 
  </div>
+ </div>
  
 
 </template>
@@ -55,7 +57,7 @@
 
 <script setup lang="ts">
     import { ref } from 'vue'
-    import useAuthWS from '../composables/useAuthWS'
+    import { useAuthWS } from '../composables/useAuthWS'
 
     const selected = ref(true)
 
@@ -70,6 +72,11 @@ a {
     cursor: pointer;
     margin-bottom: 0;
     padding-bottom: 0;
+}
+
+.content{
+    display: flex;
+    justify-content: center;
 }
 
 .container {

@@ -1,10 +1,10 @@
 import { computed, ref } from 'vue'
-import { Socket } from 'socket.io-client'
 import { useAuthStore } from '../store/auth'
 
-const useAuthWS = ( ) => {
 
-    // set Auth Store
+
+export const useAuthWS = ( ) => {
+    
     const store = useAuthStore()
     
     const { logIn, logOut, register } = store
@@ -47,9 +47,8 @@ const useAuthWS = ( ) => {
         form,
         signIn,
         signUp,
-        getAuth: computed( () => store.isAuthenticated )
+        getAuth: computed( () => store.getIsLoading )
     }
 }
 
 
-export default useAuthWS

@@ -1,4 +1,4 @@
-
+import { authGuard } from './guards/auth-guard'
 
 export const routes = [
     {
@@ -9,12 +9,13 @@ export const routes = [
     {
         path:'/chat',
         name:'chat',
+        // beforeEnter: authGuard ,
         component: () => import('../views/ChatPage.vue'),
         children:[
             {
                 path:'',
                 name:'message-chat',
-                component: () => import('../components/ChatLayout.vue')
+                component: () => import('../layouts/ChatLayout.vue')
             }
         ]
     }
