@@ -8,16 +8,7 @@ const { isOnSocketClient, clients_id, submitForm, message, connectWS, jwt } = us
 
 <template>
   <div>
-    <div>
-      <p>jwt auth</p>
-      <input 
-          v-model="jwt"
-          placeholder="jsonwebtoken... "/>
-          
-      <button @click="connectWS">confirmar</button>
-    </div>
-    <br/>
-    <h1>Client</h1>
+    <h1>Chischat</h1>
     <span>{{isOnSocketClient}}</span>
 
     <div class="chat-container">

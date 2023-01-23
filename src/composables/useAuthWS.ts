@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { Socket } from 'socket.io-client'
 import { useAuthStore } from '../store/auth'
 
@@ -46,7 +46,8 @@ const useAuthWS = ( ) => {
     return {
         form,
         signIn,
-        signUp
+        signUp,
+        getAuth: computed( () => store.isAuthenticated )
     }
 }
 

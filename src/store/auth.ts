@@ -5,7 +5,8 @@ import { User, CreateUser } from '../interfaces'
 export const useAuthStore = defineStore('auth', {
     state: ()=>({
         user: null,
-        isLoading: false
+        isLoading: false,
+        isAuthenticated: false
     }),
 
     getters: {
@@ -29,10 +30,12 @@ export const useAuthStore = defineStore('auth', {
                 }
 
                 localStorage.setItem('access_token', data.access_token)
+                this.isAuthenticated = true
                 return true;
             } catch (error) {
                 console.log(error)
                 localStorage.removeItem('access_token')
+                this.isAuthenticated = false
             }
         },
         
@@ -44,17 +47,20 @@ export const useAuthStore = defineStore('auth', {
                 localStorage.setItem('access_token', data.access_token)
                 delete data['access_token']
                 this.user = { ...data }
+                this.isAuthenticated = true
 
             } catch (error) {
                 this.user = null
                 this.isLoading = false
+                this.isAuthenticated = false
             }
         },
 
         logOut(){
+            localStorage.removeItem('access_token')
             this.user = null
             this.isLoading = false
-            localStorage.removeItem('access_token')
+            this.isAuthenticated = false
         }
     }
 })

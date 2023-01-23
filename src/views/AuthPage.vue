@@ -31,7 +31,7 @@
         <input
             v-model="form.confirm_password" 
             type="password" placeholder="Confirm Password">
-        <p>Already have an account? <a @click="!selected">Sign in</a></p>
+        <p>Already have an account? <a @click="selected =false">Sign in</a></p>
         <button @click="signUp">Save</button>
     </div>
     <div v-else >
@@ -43,6 +43,7 @@
         <input 
             v-model="form.password"
             type="password" placeholder="Password"/>
+        <p><a @click="selected = true">Create an account</a></p>
         <button @click="signIn">Confirm</button>
     </div>
 

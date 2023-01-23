@@ -3,6 +3,19 @@
 export const routes = [
     {
         path:'/',
-        component: () => import('../views/Auth.vue')
+        name:'auth',
+        component: () => import('../views/AuthPage.vue')
+    },
+    {
+        path:'/chat',
+        name:'chat',
+        component: () => import('../views/ChatPage.vue'),
+        children:[
+            {
+                path:'',
+                name:'message-chat',
+                component: () => import('../components/ChatLayout.vue')
+            }
+        ]
     }
 ]
