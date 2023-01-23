@@ -1,6 +1,40 @@
 <template >
+ <div>
+    <button 
+        class="action-auth"
+        :class="{ 'selected': selected }"
+        @click="selected=true"
+        >Register</button>
+    <button 
+        class="action-auth"
+        :class="{'selected': selected? false:true}"
+        @click="selected=false"
+        >Sign In</button>
+ </div>
+
  <div class="container">
-    <div>
+    
+    <div v-if="selected">
+        <label>Name</label>
+        <input
+            v-model="form.fullName" 
+            type="text" placeholder="Full Name">
+        <label>Email</label>
+        <input
+            v-model="form.email" 
+            type="email" placeholder="Email">
+        <label>Password</label>
+        <input
+            v-model="form.password" 
+            type="password" placeholder="Password">
+        <label>Confirm Password</label>
+        <input
+            v-model="form.confirm_password" 
+            type="password" placeholder="Confirm Password">
+        <p>Already have an account? <a @click="!selected">Sign in</a></p>
+        <button @click="signUp">Save</button>
+    </div>
+    <div v-else >
         <label>Email</label>
         <input 
             v-model="form.email"
@@ -13,19 +47,29 @@
     </div>
 
  </div>
+ 
 
 </template>
 
 
 <script setup lang="ts">
-
+    import { ref } from 'vue'
     import useAuthWS from '../composables/useAuthWS'
 
-    const { form, signIn } = useAuthWS()
+    const selected = ref(true)
+
+    const { form, signIn, signUp } = useAuthWS()
+
 
 </script>
 
 <style scoped>
+
+a {
+    cursor: pointer;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
 
 .container {
 
@@ -82,7 +126,7 @@ button:focus{
     outline: none;
 }
 
-@media screen and ( max-width: 770px){
+@media screen and ( max-width: 1200px){
     .container {
         width: 100%;
     }
@@ -90,6 +134,34 @@ button:focus{
     .container > div{
         width: 100%;
     }
+
+    input {
+        width: 250px;
+    }
+
+    label {
+        margin-left: 20px;
+    }
+
 }
+
+.action-auth{
+    border-radius: 3px;
+    padding: 4px;
+    width: 100px;
+    margin-left: 5px;
+    background-color: rgba(0,0,0, 0.5); 
+    border: 1px solid rgba( 16, 213,145,0.77);
+}
+
+.action-auth:focus {
+    box-shadow: none;
+}
+
+.action-auth.selected {
+    box-shadow: 3px 3px 3px rgba( 16, 213,145,0.77);
+}
+
+
 
 </style>

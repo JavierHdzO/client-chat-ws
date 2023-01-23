@@ -1,43 +1,52 @@
 import { ref } from 'vue'
 import { Socket } from 'socket.io-client'
+import { useAuthStore } from '../store/auth'
 
 const useAuthWS = ( ) => {
 
-    const jwt = ref<string>('')
+    // set Auth Store
+    const store = useAuthStore()
+    
+    const { logIn, logOut, register } = store
 
-    const form = ref<Object>({
+    // reactive variables need to auth
+
+    const form = ref({
         email:'',
-        password:''
+        password:'',
+        confirm_password:'',
+        fullName: ''
     })
 
-    const signIn = async() => {
 
-        const resp = await fetch('http://localhost:3000/api/auth/signin', {
-            method:'POST',
-            body: JSON.stringify(form.value),
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        })
+    //methos for useAuthStore
+    const signIn = () => {
 
-        const { access_token, email, fullName, id } = await resp.json()
-        
-        if( !access_token ) return
-
-        localStorage.setItem('access_token', access_token)
-
+        logIn( form.value )
 
     }
 
+    const signUp = () => {
 
+        if(form.value.email.trim().length <= 0) return
+        if(form.value.password.trim().length <= 0) return
+        if(form.value.confirm_password.trim().length <= 0) return
+        if(form.value.password !== form.value.confirm_password ) return
 
-    
-
+        register( form.value )
+        form.value = {
+            email:'',
+            password:'',
+            confirm_password:'',
+            fullName: ''
+        }
+    }
 
 
     return {
         form,
-        signIn
+        signIn,
+        signUp
     }
 }
 
