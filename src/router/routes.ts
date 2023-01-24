@@ -9,7 +9,7 @@ export const routes = [
     {
         path:'/chat',
         name:'chat',
-        // beforeEnter: authGuard ,
+        beforeEnter: [authGuard],
         component: () => import('../views/ChatPage.vue'),
         children:[
             {
@@ -18,5 +18,12 @@ export const routes = [
                 component: () => import('../layouts/ChatLayout.vue')
             }
         ]
+    },
+
+    {
+        path:'/test',
+        name:'test',
+        beforeEnter: [authGuard],
+        component: () => import('../components/ChatLayout.vue')
     }
 ]

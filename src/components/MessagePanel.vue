@@ -3,22 +3,16 @@
         <ul>
             <li class="item-align-end">
                 <div class="message-contant">
-                    <span>User</span>
-                    <span>Message</span>
+                    <div class="text-align-start ml5">User</div>
+                    <div class="message-text  text-align-start">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo, cum.</div>
                 </div>
             </li>
             <li class="item-align-start">
                 <div class="message-contant">
-                    <span>User</span>
-                    <span>Message</span>
+                    <div class="text-align-end item-align-start mr5">User</div>
+                    <div class="message-text  text-align-start">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo, cum.</div>
                 </div>
             </li>
-            <li>message</li>
-            <li>message</li>
-            <li>message</li>
-            <li>message</li>
-            <li>message</li>
-            <li>message</li>
         </ul>
         <div class="container-input">
             <input type="text">
@@ -41,6 +35,8 @@ ul {
 li {
     list-style: none;
     margin: 20px 0 ;
+    max-height: 100px;
+    
 }
 
 input {
@@ -73,8 +69,30 @@ button {
 .message-contant{
     width: 400px;
     max-width: 500px;
-    background-color: blue;
+    background-color: black;
+    
+    
 }
 
+.message-text{
+    padding: 15px;
+    border-radius: 16px;
+    background-color: rgba(29, 160, 114, 0.9);
+}
 
+.text-align-start{
+    text-align: start;
+}
+
+.text-align-end {
+    text-align: end;
+}
+
+.ml5 {
+    margin-left: 15px;
+}
+
+.mr5{
+    margin-right: 10px;
+}
 </style>

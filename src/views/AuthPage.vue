@@ -58,10 +58,15 @@
 <script setup lang="ts">
     import { ref } from 'vue'
     import { useAuthWS } from '../composables/useAuthWS'
+    // import { useAuthStore } from '../store/auth';
+    // const { reload } = useAuthStore()
+    // reload()
 
     const selected = ref(true)
 
     const { form, signIn, signUp } = useAuthWS()
+
+    
 
 
 </script>

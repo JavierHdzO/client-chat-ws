@@ -1,13 +1,13 @@
 import { computed, ref } from 'vue'
 import { useAuthStore } from '../store/auth'
-
+import Router from '../router'
 
 
 export const useAuthWS = ( ) => {
     
     const store = useAuthStore()
     
-    const { logIn, logOut, register } = store
+    const { logIn, logOut, register, reload } = store
 
     // reactive variables need to auth
 
@@ -20,26 +20,43 @@ export const useAuthWS = ( ) => {
 
 
     //methos for useAuthStore
-    const signIn = () => {
+    const signIn = async() => {
 
-        logIn( form.value )
-
-    }
-
-    const signUp = () => {
-
-        if(form.value.email.trim().length <= 0) return
-        if(form.value.password.trim().length <= 0) return
-        if(form.value.confirm_password.trim().length <= 0) return
-        if(form.value.password !== form.value.confirm_password ) return
-
-        register( form.value )
+        const result =  await logIn( form.value )
         form.value = {
             email:'',
             password:'',
             confirm_password:'',
             fullName: ''
         }
+        Router.push({name:"message-chat"})
+        return result
+    }
+
+    const signUp =  async() => {
+
+        if(form.value.email.trim().length <= 0) return
+        if(form.value.password.trim().length <= 0) return
+        if(form.value.confirm_password.trim().length <= 0) return
+        if(form.value.password !== form.value.confirm_password ) return
+
+        const result = await register( form.value )
+        form.value = {
+            email:'',
+            password:'',
+            confirm_password:'',
+            fullName: ''
+        }
+
+        return result
+    }
+
+    const logout = () => {
+        logOut()
+    }
+
+    const refresh = async() => {
+        await reload()
     }
 
 
@@ -47,7 +64,9 @@ export const useAuthWS = ( ) => {
         form,
         signIn,
         signUp,
-        getAuth: computed( () => store.getIsLoading )
+        logout,
+        refresh,
+        getAuth: computed( () => store.isAuthenticated )
     }
 }
 

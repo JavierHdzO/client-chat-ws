@@ -1,7 +1,6 @@
 import { defineStore } from "pinia"
 import { api } from "../api"
 import { User, CreateUser } from '../interfaces'
-
 export const useAuthStore = defineStore('auth', {
     state: ()=>({
         user: null,
@@ -30,12 +29,14 @@ export const useAuthStore = defineStore('auth', {
                 }
 
                 localStorage.setItem('access_token', data.access_token)
+                delete data['access_token']
+                localStorage.setItem('user', { ...data })
+
                 this.isAuthenticated = true
                 return true;
             } catch (error) {
-                console.log(error)
-                localStorage.removeItem('access_token')
-                this.isAuthenticated = false
+                this.logOut()
+                return false
             }
         },
         
@@ -48,11 +49,10 @@ export const useAuthStore = defineStore('auth', {
                 delete data['access_token']
                 this.user = { ...data }
                 this.isAuthenticated = true
-
+                return true
             } catch (error) {
-                this.user = null
-                this.isLoading = false
-                this.isAuthenticated = false
+                this.logOut()
+                return false
             }
         },
 
@@ -61,6 +61,36 @@ export const useAuthStore = defineStore('auth', {
             this.user = null
             this.isLoading = false
             this.isAuthenticated = false
+        },
+
+        async reload(){
+            const access_token = localStorage.getItem('access_token')
+
+            if(!access_token) return false
+
+            try {
+                this.isLoading = true
+                api.defaults.headers.common['Authorization'] = `Bearer ${access_token}`
+                const { data } =  await api.get('api/auth/refresh-access')
+
+                this.isLoading = false
+                this.user = { ...data }
+
+                if( !data ) {
+                    localStorage.removeItem('access_token')
+                    return false
+                }
+
+                localStorage.setItem('access_token', data.access_token)
+                this.isAuthenticated = true
+                return true;
+            } catch (error) {
+                
+                this.logOut()
+                return false
+            }
+
+
         }
     }
 })

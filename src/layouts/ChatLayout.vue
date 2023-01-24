@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import UsersList from '../components/UsersList.vue'
-import MessagePanel from '../components/MessagePanel.vue';
+import MessagePanel from '../components/MessagePanel.vue'
 
 </script>
 

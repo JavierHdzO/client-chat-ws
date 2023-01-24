@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import useSocketChat from '../composables/useSocket'
 
-const { isOnSocketClient, clients_id, submitForm, message, connectWS, jwt } = useSocketChat( )
+const { isOnSocketClient, clients_on, submitForm, message } = useSocketChat( )
 
 </script>
 
@@ -33,7 +32,7 @@ const { isOnSocketClient, clients_id, submitForm, message, connectWS, jwt } = us
     <aside>
       <h6>User online</h6>
       <ul class="clients-ul">
-        <li v-for="(client_id) in clients_id" :key="client_id">
+        <li v-for="(client_id) in clients_on" :key="client_id">
           <p>ID:{{client_id}}</p>
         </li>
       </ul>

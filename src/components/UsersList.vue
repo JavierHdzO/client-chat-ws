@@ -6,8 +6,8 @@
                     Yoursevel
                     <span><StatusIcon /> Disconnected</span>
                 </li>
-                <li>
-                    Users online
+                <li v-for="client in clients_on" :key="client">
+                    {{client}}
                     <span><StatusIcon :connected="true" /> Connected</span>
                 </li>
             </ul>
@@ -17,6 +17,9 @@
 
 <script setup lang="ts">
     import StatusIcon from '../components/StatusIcon.vue'
+    import useSocketChat from '../composables/useSocket'
+
+    const { clients_on } = useSocketChat()
 
 </script>
 
