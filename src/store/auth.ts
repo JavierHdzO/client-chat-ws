@@ -21,17 +21,15 @@ export const useAuthStore = defineStore('auth', {
                 const { data } =  await api.post('api/auth/signin',  {email, password})
 
                 this.isLoading = false
-                this.user = { ...data }
-
+                
                 if( !data.id ) {
                     localStorage.removeItem('access_token')
                     return false
                 }
-
+                
                 localStorage.setItem('access_token', data.access_token)
                 delete data['access_token']
-                localStorage.setItem('user', { ...data })
-
+                this.user = { ...data }
                 this.isAuthenticated = true
                 return true;
             } catch (error) {
