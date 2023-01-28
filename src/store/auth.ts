@@ -19,10 +19,9 @@ export const useAuthStore = defineStore('auth', {
             try {
                 this.isLoading = true
                 const { data } =  await api.post('api/auth/signin',  {email, password})
-
                 this.isLoading = false
                 
-                if( !data.id ) {
+                if( !data.user ) {
                     localStorage.removeItem('access_token')
                     return false
                 }
@@ -41,7 +40,7 @@ export const useAuthStore = defineStore('auth', {
         async register( {confirm_password, ...user}: CreateUser){
             try {
                 this.isLoading = true
-                const { data } = await api.post('api/auth/signup', user)
+                const { data } = await api.post('api/users', user)
                 this.isLoading = false
                 localStorage.setItem('access_token', data.access_token)
                 delete data['access_token']
@@ -55,7 +54,7 @@ export const useAuthStore = defineStore('auth', {
         },
 
         logOut(){
-            localStorage.removeItem('access_token')
+            // localStorage.removeItem('access_token')
             this.user = null
             this.isLoading = false
             this.isAuthenticated = false
@@ -64,26 +63,29 @@ export const useAuthStore = defineStore('auth', {
         async reload(){
             const access_token = localStorage.getItem('access_token')
 
+            // console.log(access_token);
+
             if(!access_token) return false
 
             try {
+                
                 this.isLoading = true
                 api.defaults.headers.common['Authorization'] = `Bearer ${access_token}`
-                const { data } =  await api.get('api/auth/refresh-access')
+                const { data } =  await api.get('api/auth/refresh')
 
                 this.isLoading = false
-                this.user = { ...data }
+                this.user = { ...data.user }
 
                 if( !data ) {
                     localStorage.removeItem('access_token')
                     return false
                 }
 
-                localStorage.setItem('access_token', data.access_token)
+                localStorage.setItem('access_token', data.refresh_access_token)
                 this.isAuthenticated = true
                 return true;
             } catch (error) {
-                
+                console.log(error);
                 this.logOut()
                 return false
             }

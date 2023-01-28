@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue'
-import { Socket } from 'socket.io-client'
+// import { Socket } from 'socket.io-client'
 import { socket } from '../sockets'
 
 const useSocketChat = ( ) => {

@@ -18,8 +18,8 @@
     <div v-if="selected">
         <label>Name</label>
         <input
-            v-model="form.fullName" 
-            type="text" placeholder="Full Name">
+            v-model="form.name" 
+            type="text" placeholder="Name">
         <label>Email</label>
         <input
             v-model="form.email" 
@@ -58,9 +58,7 @@
 <script setup lang="ts">
     import { ref } from 'vue'
     import { useAuthWS } from '../composables/useAuthWS'
-    // import { useAuthStore } from '../store/auth';
-    // const { reload } = useAuthStore()
-    // reload()
+
 
     const selected = ref(true)
 

@@ -15,7 +15,7 @@ export const useAuthWS = ( ) => {
         email:'',
         password:'',
         confirm_password:'',
-        fullName: ''
+        name: ''
     })
 
 
@@ -27,14 +27,14 @@ export const useAuthWS = ( ) => {
             email:'',
             password:'',
             confirm_password:'',
-            fullName: ''
+            name: ''
         }
         Router.push({name:"message-chat"})
         return result
     }
 
     const signUp =  async() => {
-
+        if(form.value.name.trim().length <= 0 ) return
         if(form.value.email.trim().length <= 0) return
         if(form.value.password.trim().length <= 0) return
         if(form.value.confirm_password.trim().length <= 0) return
@@ -45,7 +45,7 @@ export const useAuthWS = ( ) => {
             email:'',
             password:'',
             confirm_password:'',
-            fullName: ''
+            name: ''
         }
 
         return result
