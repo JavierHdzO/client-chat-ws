@@ -1,4 +1,5 @@
 import { computed, ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useAuthStore } from '../store/auth'
 import Router from '../router'
 
@@ -9,8 +10,8 @@ export const useAuthWS = ( ) => {
     
     const { logIn, logOut, register, reload } = store
 
+    
     // reactive variables need to auth
-
     const form = ref({
         email:'',
         password:'',
@@ -66,7 +67,8 @@ export const useAuthWS = ( ) => {
         signUp,
         logout,
         refresh,
-        getAuth: computed( () => store.isAuthenticated )
+        getAuth: computed( () => store.isAuthenticated ),
+        user: computed(() => store.getUser)
     }
 }
 

@@ -1,14 +1,15 @@
 <template>
     <div class="container-user-list">
         <aside>
+            
             <ul>
                 <li>
-                    Yoursevel
-                    <span><StatusIcon /> Disconnected</span>
+                    {{ user.name }}
+                    <span><StatusIcon :connected="true"/> Connected</span>
                 </li>
-                <li v-for="client in clients_on" :key="client">
-                    {{client}}
-                    <span><StatusIcon :connected="true" /> Connected</span>
+                <li v-for="user in onlineUsers" :key="user.userId">
+                    {{user.name}}
+                    <span><StatusIcon :connected="false" /> Connected</span>
                 </li>
             </ul>
         </aside>
@@ -17,9 +18,11 @@
 
 <script setup lang="ts">
     import StatusIcon from '../components/StatusIcon.vue'
+    import { useAuthWS } from '../composables/useAuthWS';
     import useSocketChat from '../composables/useSocket'
 
-    const { clients_on } = useSocketChat()
+    const { user } = useAuthWS()
+    const { onlineUsers } = useSocketChat()
 
 </script>
 

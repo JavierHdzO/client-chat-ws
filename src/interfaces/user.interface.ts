@@ -9,3 +9,10 @@ export interface CreateUser {
     password: string,
     confirm_password: string
 }
+
+export interface UserWS {
+    email?: string,
+    name: string,
+    userId:string,
+    socketId: string
+}

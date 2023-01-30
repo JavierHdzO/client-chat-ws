@@ -1,12 +1,20 @@
 import { ref, computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import { UserWS } from '../interfaces/user.interface'
 // import { Socket } from 'socket.io-client'
 import { socket } from '../sockets'
+import { useAuthStore } from '../store/auth'
 
 const useSocketChat = ( ) => {
+
+    //auth store
+    const store = useAuthStore()
+
+    const { getUser } = storeToRefs(store)
  
     // socket.connect()
     const statusSocket = ref<boolean>(false)
-    const clients_on   = ref<string[]>([]) 
+    const connectedClients   = ref<UserWS[]>([]) 
     const message = ref('')
 
     //listening
@@ -21,8 +29,8 @@ const useSocketChat = ( ) => {
         statusSocket.value = false
     })
 
-    socket.on('getOnlineClients', ( payload ) => {
-        console.log({ payload }); 
+    socket.on('getOnlineClients', ( clients ) => {
+        connectedClients.value = clients
     });
 
     socket.on('message-from-server', ( payload:{fullName?: string, message: string} ) => {
@@ -38,11 +46,11 @@ const useSocketChat = ( ) => {
         message.value = ''
     }
 
-    
     return {
         socket,
         isOnSocketClient: computed( () => statusSocket.value?'online':'offline'),
-        clients_on,
+        onlineUsers: computed( () => connectedClients.value.filter( client => client.userId !== getUser.value.id)),
+        connectedClients,
         submitForm,
         message
     }

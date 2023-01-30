@@ -3,7 +3,12 @@ import { api } from "../api"
 import { User, CreateUser } from '../interfaces'
 export const useAuthStore = defineStore('auth', {
     state: ()=>({
-        user: null,
+        user: {
+            name:'',
+            email:'',
+            id:'',
+            roles:[]
+        },
         isLoading: false,
         isAuthenticated: false
     }),
@@ -55,7 +60,12 @@ export const useAuthStore = defineStore('auth', {
 
         logOut(){
             // localStorage.removeItem('access_token')
-            this.user = null
+            this.user = {
+                name:'',
+                email:'',
+                id:'',
+                roles:[]
+            },
             this.isLoading = false
             this.isAuthenticated = false
         },
