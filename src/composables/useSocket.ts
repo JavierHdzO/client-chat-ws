@@ -21,9 +21,8 @@ const useSocketChat = ( ) => {
         statusSocket.value = false
     })
 
-    socket.on('getOnlineClients', ( payload:{ clients: string[]} ) => {
-        const { clients } = payload
-        clients_on.value = clients
+    socket.on('getOnlineClients', ( payload ) => {
+        console.log({ payload }); 
     });
 
     socket.on('message-from-server', ( payload:{fullName?: string, message: string} ) => {
