@@ -1,5 +1,9 @@
 <template>
-    <div class="container-message-panel">
+    <div v-if="!isUserSelected"> </div>
+
+    <div
+        v-else 
+        class="container-message-panel">
         <ul>
             <li class="item-align-end">
                 <div class="message-contant">
@@ -15,11 +19,27 @@
             </li>
         </ul>
         <div class="container-input">
-            <input type="text">
-            <button>Send</button>
+            <input
+                v-model="message"
+                type="text">
+            <button @click="emitMessageToServer" >Send</button>
         </div>
     </div>
 </template>
+
+<script setup lang="ts" >
+import { storeToRefs } from 'pinia'
+import { useChatStore } from '../store/chat';
+import useSocketChat from '../composables/useSocket'
+
+const chatStore = useChatStore()
+const { emitMessageToServer, message } = useSocketChat()
+
+const { isUserSelected } = storeToRefs(chatStore)
+
+
+
+</script>
 
 <style scoped>
 .container-message-panel{

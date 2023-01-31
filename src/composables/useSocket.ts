@@ -4,13 +4,16 @@ import { UserWS } from '../interfaces/user.interface'
 // import { Socket } from 'socket.io-client'
 import { socket } from '../sockets'
 import { useAuthStore } from '../store/auth'
+import { useChatStore } from '../store/chat'
 
 const useSocketChat = ( ) => {
 
     //auth store
-    const store = useAuthStore()
+    const authStore = useAuthStore()
+    const chatStore =  useChatStore()
 
-    const { getUser } = storeToRefs(store)
+    const { getUser } = storeToRefs(authStore)
+    const { getToUser } = storeToRefs(chatStore)
  
     // socket.connect()
     const statusSocket = ref<boolean>(false)
@@ -39,10 +42,21 @@ const useSocketChat = ( ) => {
 
     //emit
     
-    // method
-    const submitForm = (  ) => {
-        if( message.value.trim().length <= 0 ) return
-        socket.emit('message-from-client', { message:message.value })
+    // methods
+    // const submitForm = (  ) => {
+    //     if( message.value.trim().length <= 0 ) return
+    //     socket.emit('message-from-client', { message:message.value })
+    //     message.value = ''
+    // }
+
+    const emitMessageToServer = () => {
+        if( message.value.trim().length <= 0 ) return 
+
+        socket.emit('message-from-client', {
+            message:message.value,
+            to: getToUser.value
+        })
+
         message.value = ''
     }
 
@@ -51,8 +65,9 @@ const useSocketChat = ( ) => {
         isOnSocketClient: computed( () => statusSocket.value?'online':'offline'),
         onlineUsers: computed( () => connectedClients.value.filter( client => client.userId !== getUser.value.id)),
         connectedClients,
-        submitForm,
-        message
+        message,
+        /** Methods */
+        emitMessageToServer
     }
 }
 

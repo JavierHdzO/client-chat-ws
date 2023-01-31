@@ -4,10 +4,14 @@
             
             <ul>
                 <li>
-                    {{ user.name }}
+                    {{ user.name }} (Yourself)
                     <span><StatusIcon :connected="true"/> Connected</span>
                 </li>
-                <li v-for="user in onlineUsers" :key="user.userId">
+                <li 
+                    v-for="user in onlineUsers" 
+                    :key="user.userId"
+                    @click="setToUser(user)"
+                    >
                     {{user.name}}
                     <span><StatusIcon :connected="false" /> Connected</span>
                 </li>
@@ -20,9 +24,13 @@
     import StatusIcon from '../components/StatusIcon.vue'
     import { useAuthWS } from '../composables/useAuthWS';
     import useSocketChat from '../composables/useSocket'
+    import { useChatStore } from '../store/chat'
 
     const { user } = useAuthWS()
     const { onlineUsers } = useSocketChat()
+    const store = useChatStore()
+
+    const { setToUser } = store
 
 </script>
 

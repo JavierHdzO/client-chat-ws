@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import useSocketChat from '../composables/useSocket'
 
-const { isOnSocketClient, clients_on, submitForm, message } = useSocketChat( )
+const { isOnSocketClient, onlineUsers, submitForm, message } = useSocketChat( )
 
 </script>
 
@@ -32,8 +32,8 @@ const { isOnSocketClient, clients_on, submitForm, message } = useSocketChat( )
     <aside>
       <h6>User online</h6>
       <ul class="clients-ul">
-        <li v-for="(client_id) in clients_on" :key="client_id">
-          <p>ID:{{client_id}}</p>
+        <li v-for="client in onlineUsers" :key="client.userId">
+          <p>ID:{{client}}</p>
         </li>
       </ul>
     </aside>
