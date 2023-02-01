@@ -10,7 +10,7 @@
                 <li 
                     v-for="user in onlineUsers" 
                     :key="user.userId"
-                    @click="setToUser(user)"
+                    @click="selectUserChat(user)"
                     >
                     {{user.name}}
                     <span><StatusIcon :connected="false" /> Connected</span>
@@ -22,15 +22,17 @@
 
 <script setup lang="ts">
     import StatusIcon from '../components/StatusIcon.vue'
-    import { useAuthWS } from '../composables/useAuthWS';
+    import  useAuthWS  from '../composables/useAuthWS'
     import useSocketChat from '../composables/useSocket'
+    import useChat from '../composables/useChat'
     import { useChatStore } from '../store/chat'
 
     const { user } = useAuthWS()
     const { onlineUsers } = useSocketChat()
-    const store = useChatStore()
+    const { selectUserChat } = useChat()
+    // const store = useChatStore()
 
-    const { setToUser } = store
+    // const { setToUser } = store
 
 </script>
 

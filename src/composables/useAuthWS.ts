@@ -1,10 +1,9 @@
 import { computed, ref } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useAuthStore } from '../store/auth'
 import Router from '../router'
 
 
-export const useAuthWS = ( ) => {
+const useAuthWS = ( ) => {
     
     const store = useAuthStore()
     
@@ -71,5 +70,7 @@ export const useAuthWS = ( ) => {
         user: computed(() => store.getUser)
     }
 }
+
+export default useAuthWS
 
 

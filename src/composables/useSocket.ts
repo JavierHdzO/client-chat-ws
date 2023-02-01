@@ -16,6 +16,7 @@ const useSocketChat = ( ) => {
     const chatStore =  useChatStore()
 
     const { getUser } = storeToRefs(authStore)
+    const { setMessages } = chatStore
     
  
     // socket.connect()
@@ -33,13 +34,19 @@ const useSocketChat = ( ) => {
     })
 
     socket.on('getOnlineClients', ( clients ) => {
-        console.log(clients);
+        // console.log(clients);
         connectedClients.value = clients
-    });
+    })
 
     socket.on('message-from-server', ( payload ) => {
         console.log(payload);
         console.log("segunda");
+    })
+
+
+    socket.on('send-client-messages', ( { messages } ) => {
+        console.log(messages);
+        setMessages(messages)
     })
 
     

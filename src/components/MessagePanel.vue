@@ -4,7 +4,9 @@
     <div
         v-else 
         class="container-message-panel">
-        <ul>
+        
+        <div class="container-message-ul">
+            <ul>
             <li class="item-align-end">
                 <div class="message-contant">
                     <div class="text-align-start ml5">User</div>
@@ -17,7 +19,26 @@
                     <div class="message-text  text-align-start">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo, cum.</div>
                 </div>
             </li>
+
+            <li 
+                v-for="(message, index) in getMessages" :key="index"
+                :class="{'item-align-start':isMainUser(message.name), 'item-align-end':!isMainUser(message.name)}">
+                <div 
+                    class="message-contant">
+                    <div 
+                    :class="{
+                        'text-align-end':isMainUser(message.name) , 'item-align-start':isMainUser(message.name), 'mr5':isMainUser(message.name),
+                        'text-align-start':!isMainUser(message.name), 'ml5':!isMainUser(message.name)}"
+                        >{{message.name}}</div>
+                    <div 
+                    class="message-text  text-align-start"
+                    :class="{'user-color':isMainUser(message.name), 'friend-color':!isMainUser(message.name)}"
+                    >{{message.message}}</div>
+                </div>
+            </li>
+
         </ul>
+        </div>
         <div class="container-input">
             <input
                 v-model="message"
@@ -33,9 +54,10 @@ import { useChatStore } from '../store/chat'
 import useChat from '../composables/useChat'
 
 const chatStore = useChatStore()
-const { emitMessageToServer, message } = useChat()
-
 const { isUserSelected } = storeToRefs(chatStore)
+
+const { emitMessageToServer, message, getMessages, isMainUser } = useChat()
+
 
 
 
@@ -46,9 +68,18 @@ const { isUserSelected } = storeToRefs(chatStore)
     width: 70%;
 }
 
-ul {
+.container-message-ul{
     height: 90%;
+    overflow-y: hidden;
+    padding-bottom: 40px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+ul {
+    height: 100%;
     padding: 0;
+    margin-right: 15px;
 
 }
 
@@ -97,7 +128,7 @@ button {
 .message-text{
     padding: 15px;
     border-radius: 16px;
-    background-color: rgba(29, 160, 114, 0.9);
+    background-color: #1DA072;
 }
 
 .text-align-start{
@@ -113,6 +144,13 @@ button {
 }
 
 .mr5{
-    margin-right: 10px;
+    margin-right: 15px;
+}
+
+.user-color{
+    background-color: #149366;
+}
+.friend-color{
+    background-color: #04BF8A;
 }
 </style>

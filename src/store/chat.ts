@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
+import { Message } from '../interfaces'
 
 export const useChatStore =  defineStore('chat', {
     state: () => ({
-        messages:[],
+        messages: [] as Message[] | undefined,
         toUser: {
             userId: '',
             socketId:''
@@ -13,7 +14,8 @@ export const useChatStore =  defineStore('chat', {
 
     getters:{
         getToUser: ( state ) => state.toUser,
-        isUserSelected: ( state ) => state.userSelected
+        isUserSelected: ( state ) => state.userSelected,
+        getMessages: ( state ) => state.messages
     },
 
     actions:{
@@ -27,6 +29,11 @@ export const useChatStore =  defineStore('chat', {
                 userId
             }
             this.userSelected = true
+        },
+
+        setMessages( messages: Message[] ){
+            if(messages.length < 0 ) this.messages = []
+            this.messages = messages;
         }
 
     }

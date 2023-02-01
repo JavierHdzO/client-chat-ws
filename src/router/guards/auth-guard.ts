@@ -1,7 +1,7 @@
-import { useAuthWS } from '../../composables/useAuthWS'
+import useAuthWS from '../../composables/useAuthWS'
 
 export const authGuard = async(to:any, from: any, next: any) => {
-    const { refresh,getAuth } = useAuthWS()
+    const { refresh, getAuth } = useAuthWS()
     
     
     await refresh()

@@ -57,7 +57,7 @@
 
 <script setup lang="ts">
     import { ref } from 'vue'
-    import { useAuthWS } from '../composables/useAuthWS'
+    import useAuthWS from '../composables/useAuthWS'
 
 
     const selected = ref(true)
