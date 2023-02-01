@@ -18,12 +18,5 @@ export const routes = [
                 component: () => import('../layouts/ChatLayout.vue')
             }
         ]
-    },
-
-    {
-        path:'/test',
-        name:'test',
-        beforeEnter: [authGuard],
-        component: () => import('../components/ChatLayout.vue')
     }
 ]

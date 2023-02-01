@@ -36,8 +36,9 @@ const useSocketChat = ( ) => {
         connectedClients.value = clients
     });
 
-    socket.on('message-from-server', ( payload:{fullName?: string, message: string} ) => {
+    socket.on('message-from-server', ( payload ) => {
         console.log(payload);
+        console.log("segunda");
     })
 
     //emit
@@ -54,7 +55,7 @@ const useSocketChat = ( ) => {
 
         socket.emit('message-from-client', {
             message:message.value,
-            to: getToUser.value
+            ...getToUser.value
         })
 
         message.value = ''
