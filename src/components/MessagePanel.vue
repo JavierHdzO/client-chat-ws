@@ -29,11 +29,11 @@
 
 <script setup lang="ts" >
 import { storeToRefs } from 'pinia'
-import { useChatStore } from '../store/chat';
-import useSocketChat from '../composables/useSocket'
+import { useChatStore } from '../store/chat'
+import useChat from '../composables/useChat'
 
 const chatStore = useChatStore()
-const { emitMessageToServer, message } = useSocketChat()
+const { emitMessageToServer, message } = useChat()
 
 const { isUserSelected } = storeToRefs(chatStore)
 

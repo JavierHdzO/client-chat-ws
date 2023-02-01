@@ -3,11 +3,15 @@
   </template>
   
   <script lang="ts">
+  
+  import useSocketChat from '../composables/useSocket'
   export default {
     name: "StatusIcon",
     props: {
       connected: Boolean,
     },
+    setup(){
+    }
   };
   </script>
   
