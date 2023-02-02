@@ -1,13 +1,17 @@
 import { computed, ref } from 'vue'
 import { useAuthStore } from '../store/auth'
+import { useChatStore } from '../store/chat'
+
 import Router from '../router'
-import { socket } from '../sockets'
+
 
 const useAuthWS = ( ) => {
     
     const store = useAuthStore()
+    const chatStore = useChatStore()
     
     const { logIn, logOut, register, reload } = store
+    const { clear } = chatStore
 
     // reactive variables need to auth
     const form = ref({
@@ -52,6 +56,7 @@ const useAuthWS = ( ) => {
 
     const logout = () => {
         logOut()
+        clear()
     }
 
     const refresh = async() => {

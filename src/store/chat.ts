@@ -48,6 +48,19 @@ export const useChatStore =  defineStore('chat', {
                  return
             }
             this.messages?.push(message);
+        },
+
+        clear(){
+            this.toUser = {
+                userId: '',
+                socketId:'',
+                name:''
+            }
+
+            this.userSelected= false,
+            this.nofity=  false
+            this.messages = []
+
         }
 
     }
