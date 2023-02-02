@@ -10,7 +10,7 @@ const useChat = () => {
     const chatStore = useChatStore()
 
     /** Store's variables */
-    const { setToUser  } = chatStore
+    const { setToUser, addMessage  } = chatStore
     const { getToUser } = storeToRefs(chatStore)
 
     const { getUser } = storeToRefs(authStore)
@@ -20,7 +20,10 @@ const useChat = () => {
 
     const selectUserChat = ( user: UserWS ) =>{
 
-        setToUser(user)
+        setToUser({
+            ...user,
+            name: getUser.value.name
+        })
         socket.emit('get-client-messages', {
             ...getToUser.value
         })
@@ -29,12 +32,18 @@ const useChat = () => {
 
     const emitMessageToServer = () => {
         if( message.value.trim().length <= 0 ) return 
+        if( !getToUser.value.userId ) return
 
-        socket.emit('message-from-client', {
+        const messageData: Message = {
             message:message.value,
             ...getToUser.value
+        }
+
+        socket.emit('message-from-client', {
+            ...messageData
         })
 
+        addMessage(messageData)
         message.value = ''
     }
 
@@ -46,6 +55,7 @@ const useChat = () => {
         /**Computed */
         getMessages: computed( ()=> chatStore.getMessages),
         isMainUser: computed((  )=>( nameUser:string )=> nameUser === getUser.value.name ),
+        getToUser: computed(() => chatStore.getToUser),
 
         /**Methods */
         emitMessageToServer,

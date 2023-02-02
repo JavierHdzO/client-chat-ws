@@ -6,9 +6,11 @@ export const useChatStore =  defineStore('chat', {
         messages: [] as Message[] | undefined,
         toUser: {
             userId: '',
-            socketId:''
+            socketId:'',
+            name:''
         },
-        userSelected: false
+        userSelected: false,
+        nofity: false
 
     }),
 
@@ -20,13 +22,14 @@ export const useChatStore =  defineStore('chat', {
 
     actions:{
 
-        setToUser( { userId, socketId }: { userId: string, socketId: string } ){
+        setToUser( { userId, socketId, name }: { userId: string, socketId: string, name: string } ){
             if(userId.trim().length < 0) return
             if(socketId.trim().length < 0) return
 
             this.toUser = {
                 socketId,
-                userId
+                userId,
+                name
             }
             this.userSelected = true
         },
@@ -34,6 +37,17 @@ export const useChatStore =  defineStore('chat', {
         setMessages( messages: Message[] ){
             if(messages.length < 0 ) this.messages = []
             this.messages = messages;
+        },
+
+        addMessage( message: Message ){
+            // console.log(message);
+            // if(message.name.trim().length <= 0 || message.message.trim().length <= 0) return
+
+            if( message.userId !== this.getToUser.userId ){
+                 this.nofity = true
+                 return
+            }
+            this.messages?.push(message);
         }
 
     }

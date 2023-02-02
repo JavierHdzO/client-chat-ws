@@ -1,6 +1,10 @@
 import { defineStore } from "pinia"
+import $router from '../router'
 import { api } from "../api"
 import { User, CreateUser } from '../interfaces'
+
+
+
 export const useAuthStore = defineStore('auth', {
     state: ()=>({
         user: {
@@ -68,6 +72,8 @@ export const useAuthStore = defineStore('auth', {
             },
             this.isLoading = false
             this.isAuthenticated = false
+            localStorage.removeItem('access_token')
+            $router.push({name:"auth"})
         },
 
         async reload(){

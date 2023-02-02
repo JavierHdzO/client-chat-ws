@@ -5,8 +5,7 @@ import { UserWS } from '../interfaces/user.interface'
 import { socket } from '../sockets'
 import { useAuthStore } from '../store/auth'
 import { useChatStore } from '../store/chat'
-
-
+import { Message } from '../interfaces'
 
 
 const useSocketChat = ( ) => {
@@ -16,7 +15,7 @@ const useSocketChat = ( ) => {
     const chatStore =  useChatStore()
 
     const { getUser } = storeToRefs(authStore)
-    const { setMessages } = chatStore
+    const { setMessages, addMessage } = chatStore
     
  
     // socket.connect()
@@ -38,14 +37,12 @@ const useSocketChat = ( ) => {
         connectedClients.value = clients
     })
 
-    socket.on('message-from-server', ( payload ) => {
-        console.log(payload);
-        console.log("segunda");
+    socket.on('message-from-server', ( message:Message ) => {
+        addMessage( message )
     })
 
 
     socket.on('send-client-messages', ( { messages } ) => {
-        console.log(messages);
         setMessages(messages)
     })
 

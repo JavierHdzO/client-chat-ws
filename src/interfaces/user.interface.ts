@@ -12,7 +12,7 @@ export interface CreateUser {
 
 export interface UserWS {
     email?: string,
-    name?: string,
+    name: string,
     userId:string,
     socketId: string
 }

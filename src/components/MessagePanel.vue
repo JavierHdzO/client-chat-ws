@@ -2,12 +2,17 @@
     <div v-if="!isUserSelected"> </div>
 
     <div
-        v-else 
-        class="container-message-panel">
+        v-show="isUserSelected" 
+        class="container-message-panel menu-hidden"
         
-        <div class="container-message-ul">
-            <ul>
-            <li class="item-align-end">
+        >
+        
+        <div 
+            class="container-message-ul"
+            :class="{'show':props.menu}"
+            >
+            <ul >
+            <!-- <li class="item-align-end">
                 <div class="message-contant">
                     <div class="text-align-start ml5">User</div>
                     <div class="message-text  text-align-start">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo, cum.</div>
@@ -18,7 +23,7 @@
                     <div class="text-align-end item-align-start mr5">User</div>
                     <div class="message-text  text-align-start">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo, cum.</div>
                 </div>
-            </li>
+            </li> -->
 
             <li 
                 v-for="(message, index) in getMessages" :key="index"
@@ -36,7 +41,7 @@
                     >{{message.message}}</div>
                 </div>
             </li>
-
+            <div ref="ul"></div>
         </ul>
         </div>
         <div class="container-input">
@@ -49,17 +54,32 @@
 </template>
 
 <script setup lang="ts" >
+import { ref, watch, defineProps } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useChatStore } from '../store/chat'
 import useChat from '../composables/useChat'
 
+const props = defineProps({
+    menu:{
+        type: Boolean,
+        default:false
+    }
+})
 const chatStore = useChatStore()
 const { isUserSelected } = storeToRefs(chatStore)
+const ul = ref<any>(null)
+
 
 const { emitMessageToServer, message, getMessages, isMainUser } = useChat()
 
 
-
+watch( getMessages  , () => {
+    setTimeout(()=>{
+        ul.value?.scrollIntoView({behavior: "smooth", block: "center"})
+        
+      }, 1)
+    
+}, { deep: true })
 
 </script>
 
@@ -69,9 +89,10 @@ const { emitMessageToServer, message, getMessages, isMainUser } = useChat()
 }
 
 .container-message-ul{
-    height: 90%;
+    height: 85%;
     overflow-y: hidden;
     padding-bottom: 40px;
+    margin-bottom: 40px;
     overflow: scroll;
     overflow-x: hidden;
 }
@@ -120,7 +141,6 @@ button {
 .message-contant{
     width: 400px;
     max-width: 500px;
-    background-color: black;
     
     
 }
@@ -153,4 +173,46 @@ button {
 .friend-color{
     background-color: #04BF8A;
 }
+
+
+
+
+
+@media screen and (max-width:768px) {
+    .menu-hidden{
+        width: 100%;
+    }
+
+    .show {
+        position: relative;
+        left: 30%;
+        overflow-x: hidden;
+    }
+
+    .container-message-ul{
+        padding: 0px;
+        margin-bottom: 20px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .menu-hidden{
+        width: 100%;
+    }
+
+    .show {
+        position: relative;
+        left: 30%;
+        overflow-x: hidden;
+    }
+
+    .container-message-ul{
+        padding: 0px;
+        margin-bottom: 20px;
+    }
+}
+
+
+
+
 </style>

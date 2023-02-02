@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue'
 import { useAuthStore } from '../store/auth'
 import Router from '../router'
-
+import { socket } from '../sockets'
 
 const useAuthWS = ( ) => {
     
@@ -9,7 +9,6 @@ const useAuthWS = ( ) => {
     
     const { logIn, logOut, register, reload } = store
 
-    
     // reactive variables need to auth
     const form = ref({
         email:'',
