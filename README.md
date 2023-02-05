@@ -1,6 +1,9 @@
 
 <p align="center">
-  <a href="https://vuejs.org/" target="blank"><img width="200" alt="Nest Logo" /></a>
+  <a href="https://vuejs.org/" target="blank"
+  ><img width="200" alt="Vue Logo"
+   src="https://profilinator.rishav.dev/skills-assets/vuejs-original-wordmark.svg"
+   /></a>
 </p>
 
 ## Description
